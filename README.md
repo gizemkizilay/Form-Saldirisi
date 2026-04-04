@@ -64,3 +64,21 @@ Bu proje kapsamında yapılan testler sonucunda, güvenli bir web mimarisinde sa
 **Hazırlayan:** Gizem Kızılay 
 
 **Ders:** Güvenli Web Geliştirme (Vize Ödevi)
+
+---
+
+## 📸 Uygulama Ekran Görüntüleri ve Kanıtlar
+
+### 1. Zafiyetli Mod (Saldırı Başarılı)
+Sistemin korumasız olduğu `/vulnerable` sayfasında, gönderilen script kodu tarayıcı tarafından doğrudan çalıştırılmaktadır. Bu durum, verinin temizlenmeden (un-sanitized) işlendiğinin kanıtıdır.
+
+![Vulnerable Test](vulnerable.png)
+*Görsel 1: Filtrelenmemiş girdi sonucu tarayıcıda tetiklenen alert kutusu.*
+
+### 2. Güvenli Mod (Saldırı Engellendi)
+Geliştirilen filtreleme mekanizması ve Backend koruması sayesinde, `/secure` sayfasında zararlı karakterler (`<`, `>`) tespit edilerek işlem durdurulmaktadır.
+
+![Secure Test](secure.png)
+*Görsel 2: Çok katmanlı savunma (Defense-in-Depth) mekanizması ile XSS girişiminin engellenmesi.*
+
+---
