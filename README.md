@@ -61,6 +61,5 @@ Eğer saldırgan JavaScript engelini aşarsa (örneğin Proxy araçları kullana
 Bu proje kapsamında yapılan testler sonucunda, güvenli bir web mimarisinde sadece kullanıcı arayüzü kontrollerinin yeterli olmadığı, asıl güvenliğin **sunucu tarafında (Backend)** yapılan veri temizleme işlemleriyle sağlandığı doğrulanmıştır.
 
 ---
-**Hazırlayan:** Recai  
-**Tarih:** 05.04.2026  
+**Hazırlayan:** Gizem Kızılay 
 **Ders:** Güvenli Web Geliştirme (Vize Ödevi)
