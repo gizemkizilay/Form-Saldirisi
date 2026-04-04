@@ -62,4 +62,5 @@ Bu proje kapsamında yapılan testler sonucunda, güvenli bir web mimarisinde sa
 
 ---
 **Hazırlayan:** Gizem Kızılay 
+
 **Ders:** Güvenli Web Geliştirme (Vize Ödevi)
