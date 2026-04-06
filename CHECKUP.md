@@ -107,3 +107,27 @@ Healthy open-source engineering demands discipline, CI/CD, and properly formatte
 > _"Bu sistem statik bir kağıt sınavı değil, canlı bir yazılım ekosistemidir. Siz commit atmasanız bile sistem periyodik olarak açık kaynak sağlık taramasını tekrarlar. Kodunuz yerinde saysa da teknoloji ve beklentiler ilerler."_ — **K. Arasteh**
 
 You can continuously improve your repository up until the final deadline. Pushing cleanly structured commits and refactoring your architecture will immediately trigger the AI engine to update your metrics dynamically.
+
+---
+
+## 🤖 AI Agentic Code Review (Deep-Dive)
+
+### 🧠 Code Quality & Architecture
+**Rating**: ⭐ Adequate (Minimal PoC)
+A single-file Flask application demonstrating Stored XSS via a comment system. While functional, the project is contained entirely in `app.py` with embedded Jinja2 templates. The vulnerability is clearly documented with inline comments.
+
+### 🛡️ Vulnerability Reproduction
+The vulnerable route uses `{{ comment.comment_text | safe }}` in Jinja2, which explicitly disables auto-escaping and allows stored JavaScript injection via `<script>` tags in comments. This correctly models **Stored XSS (CWE-79)**.
+
+### 🔒 Defensive Fix
+The secure route applies a two-layer defense:
+1. **Backend**: `html.escape()` converts dangerous characters (`<`, `>`, `&`) to HTML entities before database storage
+2. **Frontend**: Client-side JavaScript validation rejects `<` and `>` characters at form submission
+
+### ⚠️ Areas for Improvement
+- The project needs more architectural depth — consider adding CSP headers, cookie security flags, and session management
+- No tests, no CI/CD, no Docker, no `.gitignore` detected
+- Consider implementing a Content Security Policy that blocks `unsafe-inline` scripts
+- The vulnerability should also demonstrate DOM-based XSS and Reflected XSS variants
+
+**Verdict**: A basic but functional XSS demonstration. The dual-template approach (vulnerable vs. secure) is effective for learning, but the project would benefit significantly from additional attack vector coverage and DevOps maturity.
