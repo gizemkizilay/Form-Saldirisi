@@ -1,84 +1,67 @@
-# 🛡️ Web Güvenliği Vize Projesi: XSS Analizi ve Savunma Mekanizmaları
+<img width="1280" height="305" alt="İstinye_Üniversitesi_logo svg" src="https://github.com/user-attachments/assets/8a6e42ae-14ed-43b7-b3f3-3ed52e880e22" />
 
-Bu proje, modern web uygulamalarında en kritik zafiyetlerden biri olan **Stored XSS (Kalıcı Cross-Site Scripting)** saldırısını simüle etmek ve bu saldırıya karşı geliştirilen çok katmanlı savunma stratejilerini uygulamalı olarak göstermek amacıyla hazırlanmıştır.
 
----
+# 🛡️ XSS Analizi ve Çok Katmanlı Savunma Mekanizmaları
 
-## 📝 Proje Genel Bakışı
-Uygulama, **Python Flask** framework'ü kullanılarak geliştirilmiş bir yorum paneli simülasyonudur. Sistem iki temel moddan oluşmaktadır:
+[![Python Build](https://github.com/gizemkizilay/form-saldirisi/actions/workflows/python-app.yml/badge.svg)](https://github.com/gizemkizilay/form-saldirisi/actions/workflows/python-app.yml)
+![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
+![Python](https://img.shields.io/badge/Python-3.9+-blue.svg)
+![Flask](https://img.shields.io/badge/Framework-Flask-lightgrey.svg)
 
-1.  **Zafiyetli Mod (`/vulnerable`):** Girdilerin temizlenmeden işlendiği ve saldırıya açık olan bölüm.
-2.  **Güvenli Mod (`/secure`):** Hem istemci (Frontend) hem de sunucu (Backend) tarafında koruma kalkanlarının devrede olduğu bölüm.
-
----
-
-## 🚀 Teknik Uygulama Detayları
-
-### 1. Zafiyet Senaryosu ve İstismar (Exploit)
-Zafiyetli rotada, kullanıcıdan gelen veriler doğrudan veritabanına kaydedilir. 
-* **Zafiyet Nedeni:** Jinja2 şablon motorunda kullanılan `| safe` filtresi, tarayıcının veriyi HTML olarak işlemesine izin verir.
-* **Saldırı Vektörü:**
-    ```html
-    <script>alert('Sistem Güvenliği İhlal Edildi!');</script>
-    ```
-* **Sonuç:** Bu kod yüklendiğinde, sayfayı ziyaret eden her kullanıcının tarayıcısında bir uyarı penceresi açılır. Bu, kötü niyetli bir saldırganın oturum çerezlerini (cookies) çalabileceğini kanıtlar.
+Bu proje, modern web uygulamalarında en sık rastlanan zafiyetlerden biri olan **Stored XSS (Kalıcı Cross-Site Scripting)** saldırısını simüle etmek ve bu saldırıya karşı geliştirilen çok katmanlı savunma stratejilerini (Defense-in-Depth) uygulamalı olarak göstermek amacıyla geliştirilmiştir.
 
 ---
 
-### 2. Savunma Stratejileri (Güvenli Mod)
-Güvenli rotada **"Defense-in-Depth" (Derinlemesine Savunma)** prensibi uygulanmıştır:
-
-#### A. İstemci Taraflı Doğrulama (Frontend Validation)
-Kullanıcı formu göndermeden önce çalışan JavaScript fonksiyonu, girdi içerisinde `<` ve `>` karakterlerini kontrol eder.
-* **Fonksiyon:** `validateForm()`
-* **Etki:** Zararlı karakter tespit edilirse formun sunucuya gitmesi engellenir.
-
-#### B. Sunucu Taraflı Temizleme (Backend Sanitization)
-Eğer saldırgan JavaScript engelini aşarsa (örneğin Proxy araçları kullanarak), sunucu tarafında Python devreye girer.
-* **Kullanılan Metot:** `html.escape()`
-* **Dönüşüm:** `<` karakteri `&lt;`, `>` karakteri `&gt;` formatına çevrilir.
-* **Sonuç:** Tarayıcı bu veriyi bir "kod" olarak değil, "düz metin" olarak görür. Böylece saldırı kodu çalışmaz hale gelir.
+## 👨‍🏫 Akademik Bilgiler
+* **Üniversite:** İstinye Üniversitesi
+* **Ders:** Güvenli Web Yazılım Geliştirme
+* **Danışman Eğitmen:** Keyvan Arasteh Abbasabad
+* **Geliştirici:** Gizem Kızılay
 
 ---
 
-## 🛠️ Kurulum ve Kullanım
-
-1.  **Gereksinimleri Yükle:**
-    ```bash
-    pip install flask
-    ```
-2.  **Uygulamayı Başlat:**
-    ```bash
-    python app.py
-    ```
-3.  **Test Adresleri:**
-    * **Zafiyetli Panel:** `http://127.0.0.1:5000/vulnerable`
-    * **Güvenli Panel:** `http://127.0.0.1:5000/secure`
+## 📖 İçindekiler
+1. [Proje Özeti ve Amacı](#1-proje-özeti-ve-amacı)
+2. [Teknik Uygulama Detayları](#2-teknik-uygulama-detayları)
+3. [Savunma Stratejileri](#3-savunma-stratejileri)
+4. [Kurulum ve Kullanım](#4-kurulum-ve-kullanım)
+5. [Beklenen Derinlik ve Özdeğerlendirme](#5-beklenen-derinlik-ve-özdeğerlendirme)
+6. [Yasal Uyarı](#6-yasal-uyarı)
 
 ---
 
-## 📊 Sonuç ve Değerlendirme
-Bu proje kapsamında yapılan testler sonucunda, güvenli bir web mimarisinde sadece kullanıcı arayüzü kontrollerinin yeterli olmadığı, asıl güvenliğin **sunucu tarafında (Backend)** yapılan veri temizleme işlemleriyle sağlandığı doğrulanmıştır.
+## 1. Proje Özeti ve Amacı
+Uygulama, **Python Flask** framework'ü ve **SQLite** veritabanı kullanılarak geliştirilmiş bir yorum paneli simülasyonudur. Projenin temel amacı, bir web uygulamasının girdi temizleme (sanitization) süreçleri eksik bırakıldığında oluşabilecek güvenlik risklerini ve bu risklerin hem istemci hem de sunucu tarafında nasıl bertaraf edileceğini kanıtlamaktır.
 
----
-**Hazırlayan:** Gizem Kızılay 
+## 2. Teknik Uygulama Detayları
+Sistem iki temel çalışma modundan oluşmaktadır:
 
-**Ders:** Güvenli Web Geliştirme (Vize Ödevi)
+* **Zafiyetli Mod (`/vulnerable`):** Kullanıcıdan gelen veriler doğrudan veritabanına kaydedilir. Jinja2 şablon motorunda kullanılan `| safe` filtresi, tarayıcının veriyi HTML olarak işlemesine izin vererek XSS saldırısına kapı açar.
+* **Güvenli Mod (`/secure`):** Veriler veritabanına yazılmadan önce encode edilir ve görüntüleme aşamasında otomatik kaçış (escaping) mekanizmaları devrededir.
 
----
+## 3. Savunma Stratejileri
+Projede **"Defense-in-Depth"** prensibi uyarınca iki aşamalı koruma uygulanmıştır:
 
-## 📸 Uygulama Ekran Görüntüleri ve Kanıtlar
+* **A. İstemci Taraflı Doğrulama (Frontend):** `validateForm()` JavaScript fonksiyonu ile form gönderilmeden önce `<` ve `>` karakterleri denetlenir. Bu, ilk savunma hattıdır.
+* **B. Sunucu Taraflı Temizleme (Backend):** JavaScript engellerinin aşılması ihtimaline karşı Python tarafında `html.escape()` metodu kullanılır. `<script>` gibi etiketler `&lt;script&gt;` formatına çevrilerek zararsız düz metin haline getirilir.
 
-### 1. Zafiyetli Mod (Saldırı Başarılı)
-Sistemin korumasız olduğu `/vulnerable` sayfasında, gönderilen script kodu tarayıcı tarafından doğrudan çalıştırılmaktadır. Bu durum, verinin temizlenmeden (un-sanitized) işlendiğinin kanıtıdır.
+## 4. Kurulum ve Kullanım
 
-![Vulnerable Test](vulnerable.png)
-*Görsel 1: Filtrelenmemiş girdi sonucu tarayıcıda tetiklenen alert kutusu.*
+```bash
+# Gereksinimleri yükleyin
+pip install -r requirements.txt
 
-### 2. Güvenli Mod (Saldırı Engellendi)
-Geliştirilen filtreleme mekanizması ve Backend koruması sayesinde, `/secure` sayfasında zararlı karakterler (`<`, `>`) tespit edilerek işlem durdurulmaktadır.
+# Uygulamayı başlatın
+python app.py
+```
+Uygulama başlatıldıktan sonra tarayıcı üzerinden şu adreslere erişilebilir:
+* **Zafiyetli Panel:** `http://127.0.0.1:5000/vulnerable`
+* **Güvenli Panel:** `http://127.0.0.1:5000/secure`
 
-![Secure Test](secure.png)
-*Görsel 2: Çok katmanlı savunma (Defense-in-Depth) mekanizması ile XSS girişiminin engellenmesi.*
+## 5. Beklenen Derinlik ve Özdeğerlendirme
+* **1. Neden Bu Yaklaşım Seçildi?:** Web güvenliğinde sadece tek bir noktada (örneğin sadece frontend) kontrol yapılması yeterli değildir. Saldırganların aracı yazılımlar (Proxy) ile frontend kontrollerini atlatabileceği varsayılarak, güvenliğin asıl merkezi olan sunucu tarafında temizleme işlemi zorunlu kılınmıştır.
+* **2. Ana Güvenlik Sonuçları:** Yapılan testlerde, `| safe` filtresinin kaldırılması ve `html.escape()` kullanımı ile XSS saldırı vektörlerinin tamamen etkisiz hale getirildiği, zararlı scriptlerin tarayıcı tarafından çalıştırılamadığı gözlemlenmiştir.
+* **3. Genişletilebilirlik:** Proje, üretim ortamında **Content Security Policy (CSP)** başlıklarının eklenmesi ve daha gelişmiş bir SQL Injection koruması sağlayan ORM yapılarına geçiş yapılarak genişletilebilir.
 
----
+## 6. Yasal Uyarı
+Bu proje, İstinye Üniversitesi bünyesinde tamamen eğitim ve araştırma (Proof of Concept) amacıyla geliştirilmiştir. Kötü niyetli kullanımlarda sorumluluk geliştiriciye ait değildir.
