@@ -1,0 +1,12 @@
+name: Bug Report (Hata Bildirimi)
+description: Projede bulduğunuz bir hatayı veya zafiyeti bildirin.
+title: "[BUG] "
+labels: ["bug"]
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: Hatayı Açıklayın
+      description: Karşılaştığınız sorunu veya atlatılan XSS zafiyetini detaylıca yazın.
+    validations:
+      required: true
