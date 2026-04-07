@@ -1,51 +1,54 @@
-<img width="1280" height="305" alt="İstinye_Üniversitesi_logo svg" src="https://github.com/user-attachments/assets/8a6e42ae-14ed-43b7-b3f3-3ed52e880e22" />
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/8a6e42ae-14ed-43b7-b3f3-3ed52e880e22" alt="İstinye Üniversitesi" width="300"/>
+</p>
 
+### 👤 Proje Bilgileri
 
-# 🛡️ XSS Analizi ve Çok Katmanlı Savunma Mekanizmaları
+| | |
+|---|---|
+| **Öğrenci** | Gizem Kızılay |
+| **Danışman Eğitmen** | Keyvan Arasteh Abbasabad |
+| **Üniversite** | İstinye Üniversitesi |
+| **Ders** | Güvenli Web Yazılım Geliştirme |
 
-[![Python Build](https://github.com/gizemkizilay/form-saldirisi/actions/workflows/python-app.yml/badge.svg)](https://github.com/gizemkizilay/form-saldirisi/actions/workflows/python-app.yml)
-![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
-![Python](https://img.shields.io/badge/Python-3.9+-blue.svg)
-![Flask](https://img.shields.io/badge/Framework-Flask-lightgrey.svg)
+# 🛡️ Form Attack: Stored XSS & Defense-in-Depth Architecture
 
-Bu proje, modern web uygulamalarında en sık rastlanan zafiyetlerden biri olan **Stored XSS (Kalıcı Cross-Site Scripting)** saldırısını simüle etmek ve bu saldırıya karşı geliştirilen çok katmanlı savunma stratejilerini (Defense-in-Depth) uygulamalı olarak göstermek amacıyla geliştirilmiştir.
+![Python](https://img.shields.io/badge/Language-Python_3.9+-3776AB?style=flat-square&logo=python&logoColor=white)
+![Flask](https://img.shields.io/badge/Framework-Flask-000000?style=flat-square&logo=flask&logoColor=white)
+![License](https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square)
+[![Python Build](https://github.com/gizemkizilay/form-saldirisi/actions/workflows/python-app.yml/badge.svg)](https://github.com/gizemkizilay/form-saldirisi/actions)
 
----
-
-## 👨‍🏫 Akademik Bilgiler
-* **Üniversite:** İstinye Üniversitesi
-* **Ders:** Güvenli Web Yazılım Geliştirme
-* **Danışman Eğitmen:** Keyvan Arasteh Abbasabad
-* **Geliştirici:** Gizem Kızılay
-
----
-
-## 📖 İçindekiler
-1. [Proje Özeti ve Amacı](#1-proje-özeti-ve-amacı)
-2. [Teknik Uygulama Detayları](#2-teknik-uygulama-detayları)
-3. [Savunma Stratejileri](#3-savunma-stratejileri)
-4. [Kurulum ve Kullanım](#4-kurulum-ve-kullanım)
-5. [Beklenen Derinlik ve Özdeğerlendirme](#5-beklenen-derinlik-ve-özdeğerlendirme)
-6. [Yasal Uyarı](#6-yasal-uyarı)
+[🇹🇷 Türkçe](#turkce) | [🇬🇧 English](#english)
 
 ---
 
-## 1. Proje Özeti ve Amacı
-Uygulama, **Python Flask** framework'ü ve **SQLite** veritabanı kullanılarak geliştirilmiş bir yorum paneli simülasyonudur. Projenin temel amacı, bir web uygulamasının girdi temizleme (sanitization) süreçleri eksik bırakıldığında oluşabilecek güvenlik risklerini ve bu risklerin hem istemci hem de sunucu tarafında nasıl bertaraf edileceğini kanıtlamaktır.
+<a id="turkce"></a>
+## 🇹🇷 Türkçe
 
-## 2. Teknik Uygulama Detayları
-Sistem iki temel çalışma modundan oluşmaktadır:
+Bu proje, modern web uygulamalarında en sık rastlanan ve kritik sonuçlar doğuran **Stored XSS (Kalıcı Cross-Site Scripting)** zafiyetini simüle eden ve bu saldırıya karşı endüstri standardı olan **"Defense-in-Depth" (Derinlemesine Savunma)** stratejilerini uygulamalı olarak gösteren bir web güvenliği laboratuvarıdır.
 
-* **Zafiyetli Mod (`/vulnerable`):** Kullanıcıdan gelen veriler doğrudan veritabanına kaydedilir. Jinja2 şablon motorunda kullanılan `| safe` filtresi, tarayıcının veriyi HTML olarak işlemesine izin vererek XSS saldırısına kapı açar.
-* **Güvenli Mod (`/secure`):** Veriler veritabanına yazılmadan önce encode edilir ve görüntüleme aşamasında otomatik kaçış (escaping) mekanizmaları devrededir.
+### 🚀 Özellikler
+* **Korumasız Ortam Simülasyonu (`/vulnerable`):** Girdi temizleme (sanitization) süreçlerinin eksik bırakıldığı, Jinja2 şablon motorunda `| safe` filtresinin kullanılarak XSS saldırısına bilerek kapı açıldığı zafiyetli mod.
+* **Güvenli Ortam Simülasyonu (`/secure`):** Hem istemci (Frontend) hem de sunucu (Backend) tarafında güvenlik kalkanlarının aktif olduğu korumalı mod.
+* **İstemci Taraflı Doğrulama (Frontend Validation):** Form gönderilmeden önce çalışan JavaScript fonksiyonu (`validateForm`) ile `<` ve `>` karakterlerinin anlık denetimi.
+* **Sunucu Taraflı Temizleme (Backend Sanitization):** `html.escape()` metodu kullanılarak zararlı payload'ların HTML encode işlemine tabi tutulması ve düz metne (plain text) çevrilmesi.
 
-## 3. Savunma Stratejileri
-Projede **"Defense-in-Depth"** prensibi uyarınca iki aşamalı koruma uygulanmıştır:
+### 🛡️ MITRE ATT&CK Matrisi
 
-* **A. İstemci Taraflı Doğrulama (Frontend):** `validateForm()` JavaScript fonksiyonu ile form gönderilmeden önce `<` ve `>` karakterleri denetlenir. Bu, ilk savunma hattıdır.
-* **B. Sunucu Taraflı Temizleme (Backend):** JavaScript engellerinin aşılması ihtimaline karşı Python tarafında `html.escape()` metodu kullanılır. `<script>` gibi etiketler `&lt;script&gt;` formatına çevrilerek zararsız düz metin haline getirilir.
+| ID | İsim | Açıklama |
+| :--- | :--- | :--- |
+| **T1190** | Exploit Public-Facing Application | Web uygulamasındaki girdi denetimi (Input Validation) eksikliğinin istismar edilmesi. |
+| **T1059.007**| Command and Scripting Interpreter: JavaScript | Tarayıcı üzerinde zararlı JS payload'larının (XSS) otonom olarak çalıştırılması. |
+| **T1539** | Steal Web Session Cookie | Başarılı bir Stored XSS saldırısı sonucu yetkilendirme çerezlerinin (Cookie) çalınması simülasyonu. |
+| **T1189** | Drive-by Compromise | Zafiyetli `/vulnerable` sayfasını ziyaret eden kullanıcıların tarayıcılarında zararlı kodun otomatik tetiklenmesi. |
 
-## 4. Kurulum ve Kullanım
+### ⚙️ Neden Python ve Flask?
+Siber güvenlik "Proof of Concept" (PoC) çalışmalarında, sistemin arka planında nelerin olup bittiğini şeffaf bir şekilde görebilmek çok önemlidir. Python Flask mikro-framework'ü, gereksiz karmaşıklıktan uzak yapısıyla güvenlik zafiyetlerinin temel nedenlerini (Root Cause) izole etmeyi sağlar. Jinja2 şablon motoru, `| safe` filtresi gibi yapılarıyla "Auto-Escaping" mekanizmalarının kapatılıp açılabilmesine olanak tanıyarak, savunma katmanlarının etkisini net bir şekilde kanıtlar.
+
+### 📊 Beklenen Derinlik ve Özdeğerlendirme
+Web güvenliğinde sadece tek bir noktada (örneğin sadece Frontend JavaScript ile) kontrol yapılması asla yeterli değildir. Saldırganların aracı yazılımlar (Proxy/Burp Suite vb.) ile Frontend kontrollerini kolayca atlatabileceği varsayılmıştır. Bu nedenle projenin mimarisi, güvenliğin asıl merkezi olan sunucu tarafında (Backend) temizleme işlemini zorunlu kılan bir yaklaşımla inşa edilmiştir.
+
+### 🛠 Kurulum ve Kullanım
 
 ```bash
 # Gereksinimleri yükleyin
@@ -53,15 +56,3 @@ pip install -r requirements.txt
 
 # Uygulamayı başlatın
 python app.py
-```
-Uygulama başlatıldıktan sonra tarayıcı üzerinden şu adreslere erişilebilir:
-* **Zafiyetli Panel:** `http://127.0.0.1:5000/vulnerable`
-* **Güvenli Panel:** `http://127.0.0.1:5000/secure`
-
-## 5. Beklenen Derinlik ve Özdeğerlendirme
-* **1. Neden Bu Yaklaşım Seçildi?:** Web güvenliğinde sadece tek bir noktada (örneğin sadece frontend) kontrol yapılması yeterli değildir. Saldırganların aracı yazılımlar (Proxy) ile frontend kontrollerini atlatabileceği varsayılarak, güvenliğin asıl merkezi olan sunucu tarafında temizleme işlemi zorunlu kılınmıştır.
-* **2. Ana Güvenlik Sonuçları:** Yapılan testlerde, `| safe` filtresinin kaldırılması ve `html.escape()` kullanımı ile XSS saldırı vektörlerinin tamamen etkisiz hale getirildiği, zararlı scriptlerin tarayıcı tarafından çalıştırılamadığı gözlemlenmiştir.
-* **3. Genişletilebilirlik:** Proje, üretim ortamında **Content Security Policy (CSP)** başlıklarının eklenmesi ve daha gelişmiş bir SQL Injection koruması sağlayan ORM yapılarına geçiş yapılarak genişletilebilir.
-
-## 6. Yasal Uyarı
-Bu proje, İstinye Üniversitesi bünyesinde tamamen eğitim ve araştırma (Proof of Concept) amacıyla geliştirilmiştir. Kötü niyetli kullanımlarda sorumluluk geliştiriciye ait değildir.
