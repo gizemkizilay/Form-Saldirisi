@@ -5,7 +5,6 @@
 ### 👤 Proje Bilgileri
 
 | | |
-|---|---|
 | **Öğrenci** | Gizem Kızılay |
 | **Danışman Eğitmen** | Keyvan Arasteh Abbasabad |
 | **Üniversite** | İstinye Üniversitesi |
