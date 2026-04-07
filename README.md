@@ -5,10 +5,11 @@
 ### 👤 Proje Bilgileri
 
 | | |
+|---|---|
 | **Öğrenci** | Gizem Kızılay |
 | **Danışman Eğitmen** | Keyvan Arasteh Abbasabad |
 | **Üniversite** | İstinye Üniversitesi |
-| **Ders** | Güvenli Web Yazılım Geliştirme |
+| **Ders** | Tersine Mühendislik (Reverse Engineering) |
 
 # 🛡️ Form Attack: Stored XSS & Defense-in-Depth Architecture
 
